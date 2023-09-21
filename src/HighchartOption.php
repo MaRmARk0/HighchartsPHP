@@ -1,40 +1,44 @@
 <?php
 /**
-*
-* Copyright 2012-2012 Portugalmail Comunicações S.A (http://www.portugalmail.net/)
-*
-* See the enclosed file LICENCE for license information (GPLv3). If you
-* did not receive this file, see http://www.gnu.org/licenses/gpl-3.0.html.
-*
-* @author Gonçalo Queirós <mail@goncaloqueiros.net>
-*/
+ *
+ * Copyright 2012-2012 Portugalmail Comunicações S.A (http://www.portugalmail.net/)
+ *
+ * See the enclosed file LICENCE for license information (GPLv3). If you
+ * did not receive this file, see http://www.gnu.org/licenses/gpl-3.0.html.
+ *
+ * @author Gonçalo Queirós <mail@goncaloqueiros.net>
+ */
 
 namespace Ghunti\HighchartsPHP;
 
-class HighchartOption implements \ArrayAccess
+use ArrayAccess;
+
+/**
+ * @template-implements ArrayAccess<int, HighchartOption>
+ */
+class HighchartOption implements ArrayAccess
 {
     /**
      * An array of HighchartOptions
      *
-     * @var array
+     * @var array<array-key, HighchartOption>
      */
-    private $_childs = array();
+    private array $items = [];
 
     /**
      * The option value
      *
      * @var mixed
      */
-    private $_value;
+    private mixed $_value;
 
     /**
      * Clone HighchartOption object
      */
     public function __clone()
     {
-        foreach ($this->_childs as $key => $value)
-        {
-            $this->_childs[$key] = clone $value;
+        foreach ($this->items as $key => $value) {
+            $this->items[$key] = clone $value;
         }
     }
 
@@ -43,23 +47,23 @@ class HighchartOption implements \ArrayAccess
      *
      * @param mixed $value The option value
      */
-    public function __construct($value = null)
+    public function __construct(mixed $value = null)
     {
         if (is_string($value)) {
             //Avoid json-encode errors latter on
-            if(function_exists('iconv')){
+            if (function_exists('iconv')) {
                 $this->_value = iconv(
-                        mb_detect_encoding($value),
-                        "UTF-8",
-                        $value
+                    mb_detect_encoding($value),
+                    "UTF-8",
+                    $value
                 );
             } else {// fallback for servers that does not have iconv  
                 $this->_value = mb_convert_encoding($value, "UTF-8", mb_detect_encoding($value));
             }
-        } else if (!is_array($value)) {
+        } elseif (!is_array($value)) {
             $this->_value = $value;
         } else {
-            foreach($value as $key => $val) {
+            foreach ($value as $key => $val) {
                 $this->offsetSet($key, $val);
             }
         }
@@ -68,69 +72,105 @@ class HighchartOption implements \ArrayAccess
     /**
      * Returns the value of the current option
      *
-     * @return mixed The option value
+     * @return array<array-key, mixed>|string|null The option value
      */
-    public function getValue()
+    public function getValue(): mixed
     {
         if (isset($this->_value)) {
             //This is a final option
             return $this->_value;
-        } elseif (!empty($this->_childs)) {
+        } elseif (!empty($this->items)) {
             //The option value is an array
-            $result = array();
-            foreach ($this->_childs as $key => $value) {
+            $result = [];
+            foreach ($this->items as $key => $value) {
                 $result[$key] = $value->getValue();
             }
+
             return $result;
         }
+
         return null;
     }
 
-    public function __set($offset, $value)
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function __set(mixed $offset, mixed $value)
     {
         $this->offsetSet($offset, $value);
     }
 
-    public function __get($offset)
+    /**
+     * @param mixed $offset
+     *
+     * @return false|self
+     */
+    public function __get(mixed $offset)
     {
         return $this->offsetGet($offset);
     }
 
-    public function offsetSet($offset, $value): void
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     *
+     * @return void
+     */
+    public function offsetSet(mixed $offset, mixed $value): void
     {
         if (is_null($offset)) {
-            $this->_childs[] = new self($value);
+            $this->items[] = new self($value);
         } else {
-            $this->_childs[$offset] = new self($value);
+            $this->items[$offset] = new self($value);
         }
         //If the option has at least one child, then it won't
         //have a final value
         unset($this->_value);
     }
 
-    public function offsetExists($offset): bool
+    /**
+     * @param mixed $offset
+     *
+     * @return bool
+     */
+    public function offsetExists(mixed $offset): bool
     {
-        return isset($this->_childs[$offset]);
+        return isset($this->items[$offset]);
     }
 
-    public function offsetUnset($offset): void
+    /**
+     * @param mixed $offset
+     *
+     * @return void
+     */
+    public function offsetUnset(mixed $offset): void
     {
-        unset($this->_childs[$offset]);
+        unset($this->items[$offset]);
     }
 
-    public function offsetGet($offset): mixed
+    /**
+     * @param mixed $offset
+     *
+     * @return false|self
+     */
+    public function offsetGet(mixed $offset): false|self
     {
         //Unset the value, because we will always
         //have at least one child at the end of
         //this method
         unset($this->_value);
         if (is_null($offset)) {
-            $this->_childs[] = new self();
-            return end($this->_childs);
+            $this->items[] = new self();
+
+            return end($this->items);
         }
-        if (!isset($this->_childs[$offset])) {
-            $this->_childs[$offset] = new self();
+        if (!isset($this->items[$offset])) {
+            $this->items[$offset] = new self();
         }
-        return $this->_childs[$offset];
+
+        return $this->items[$offset];
     }
 }

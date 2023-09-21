@@ -1,13 +1,13 @@
 <?php
 /**
-*
-* Copyright 2012-2012 Portugalmail Comunicações S.A (http://www.portugalmail.net/)
-*
-* See the enclosed file LICENCE for license information (GPLv3). If you
-* did not receive this file, see http://www.gnu.org/licenses/gpl-3.0.html.
-*
-* @author Gonçalo Queirós <mail@goncaloqueiros.net>
-*/
+ *
+ * Copyright 2012-2012 Portugalmail Comunicações S.A (http://www.portugalmail.net/)
+ *
+ * See the enclosed file LICENCE for license information (GPLv3). If you
+ * did not receive this file, see http://www.gnu.org/licenses/gpl-3.0.html.
+ *
+ * @author Gonçalo Queirós <mail@goncaloqueiros.net>
+ */
 
 namespace Ghunti\HighchartPHP\Tests;
 
@@ -32,7 +32,7 @@ class HighchartOptionTest extends TestCase
         $this->assertEquals(
             array(
                 'a' => 'A',
-                'b' => 'B'
+                'b' => 'B',
             ),
             $options->getValue()
         );
@@ -46,7 +46,7 @@ class HighchartOptionTest extends TestCase
         $this->assertEquals(
             array(
                 'a' => array('b' => 'AB'),
-                'b' => 'B'
+                'b' => 'B',
             ),
             $options->getValue()
         );
@@ -56,7 +56,7 @@ class HighchartOptionTest extends TestCase
         $this->assertEquals(
             array(
                 'a' => 'A',
-                'b' => 'B'
+                'b' => 'B',
             ),
             $options->getValue()
         );
@@ -68,8 +68,8 @@ class HighchartOptionTest extends TestCase
         $this->assertEquals(
             array(
                 'a' => array(
-                    'b' => array('c' => 'ABC')
-                )
+                    'b' => array('c' => 'ABC'),
+                ),
             ),
             $options->getValue()
         );
@@ -79,8 +79,8 @@ class HighchartOptionTest extends TestCase
         $this->assertEquals(
             array(
                 'a' => array(
-                    'b' => array('c' => 'ABC')
-                )
+                    'b' => array('c' => 'ABC'),
+                ),
             ),
             $options->getValue()
         );
@@ -95,9 +95,9 @@ class HighchartOptionTest extends TestCase
         $options->a[] = 'A3';
         $this->assertEquals(
             array(
-                0  => '0',
-                1  => '1',
-                'a' => array('A1', 'A2', 'A3')
+                0   => '0',
+                1   => '1',
+                'a' => array('A1', 'A2', 'A3'),
             ),
             $options->getValue()
         );
@@ -108,48 +108,48 @@ class HighchartOptionTest extends TestCase
         $options['a'] = array('A0', 'A1');
         $options['b'] = array(
             'a' => 'BA',
-            'b' => 'BB'
+            'b' => 'BB',
         );
         $options['c'] = array(
             'a' => 'CA',
-            'C0'
+            'C0',
         );
         $options->d = array('D0', 'D1');
         $options->e = array(
             'a' => 'EA',
-            'b' => 'EB'
+            'b' => 'EB',
         );
         $options->f = array(
             'a' => 'FA',
-            'F0'
+            'F0',
         );
 
         $this->assertEquals(
             array(
                 'a' => array(
                     'A0',
-                    'A1'
+                    'A1',
                 ),
                 'b' => array(
                     'a' => 'BA',
-                    'b' => 'BB'
+                    'b' => 'BB',
                 ),
                 'c' => array(
                     'a' => 'CA',
-                    'C0'
+                    'C0',
                 ),
                 'd' => array(
                     'D0',
-                    'D1'
+                    'D1',
                 ),
                 'e' => array(
                     'a' => 'EA',
-                    'b' => 'EB'
+                    'b' => 'EB',
                 ),
                 'f' => array(
                     'a' => 'FA',
-                    'F0'
-                )
+                    'F0',
+                ),
             ),
             $options->getValue()
         );
@@ -161,67 +161,67 @@ class HighchartOptionTest extends TestCase
             array('A00', 'A01'),
             'a' => array(
                 'AA0',
-                'AA1'
+                'AA1',
             ),
             array(
                 'a' => 'A1A',
-                'b' => 'A1B'
+                'b' => 'A1B',
             ),
             'b' => array(
                 'a' => 'ABA',
-                'b' => 'ABB'
+                'b' => 'ABB',
             ),
             '2',
-            'c' => 'C'
+            'c' => 'C',
         );
         $options->b = array(
             array('B00', 'B01'),
             'a' => array(
                 'BA0',
-                'BA1'
+                'BA1',
             ),
             array(
                 'a' => 'B1A',
-                'b' => 'B1B'
+                'b' => 'B1B',
             ),
             'b' => array(
                 'a' => 'BBA',
-                'b' => 'BBB'
+                'b' => 'BBB',
             ),
             '2',
-            'c' => 'C'
+            'c' => 'C',
         );
 
         $this->assertEquals(
             array(
                 'a' => array(
-                    0  => array('A00', 'A01'),
-                    1  => array(
+                    0   => array('A00', 'A01'),
+                    1   => array(
                         'a' => 'A1A',
-                        'b' => 'A1B'
+                        'b' => 'A1B',
                     ),
-                    2  => '2',
+                    2   => '2',
                     'a' => array('AA0', 'AA1'),
                     'b' => array(
                         'a' => 'ABA',
-                        'b' => 'ABB'
+                        'b' => 'ABB',
                     ),
-                    'c' => 'C'
+                    'c' => 'C',
                 ),
                 'b' => array(
-                    0  => array('B00', 'B01'),
-                    1  => array(
+                    0   => array('B00', 'B01'),
+                    1   => array(
                         'a' => 'B1A',
-                        'b' => 'B1B'
+                        'b' => 'B1B',
                     ),
-                    2  => '2',
+                    2   => '2',
                     'a' => array('BA0', 'BA1'),
                     'b' => array(
                         'a' => 'BBA',
-                        'b' => 'BBB'
+                        'b' => 'BBB',
                     ),
-                    'c' => 'C'
-                )
+                    'c' => 'C',
+                ),
             ),
             $options->getValue()
         );
@@ -235,9 +235,9 @@ class HighchartOptionTest extends TestCase
             array(
                 'a' => array(
                     'b' => array(
-                        'c' => array('ABC0', 'ABC1')
-                    )
-                )
+                        'c' => array('ABC0', 'ABC1'),
+                    ),
+                ),
             ),
             $options->getValue()
         );

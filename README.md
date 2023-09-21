@@ -6,6 +6,11 @@ It isn't a simple port of the JavaScript library to PHP, it was designed in a wa
 
 The companion webpage can be found at https://goncaloqueiros.net/highcharts.php
 
+Note on this fork
+-----------------
+
+This fork was created to add support for PHP 8.2 and to fix some bugs. It is not intended to be a long-term fork, but rather a temporary solution until the original author has time to update the library.
+
 Setup
 -----
 
@@ -13,11 +18,11 @@ The recommended way to install HighchartsPHP is through  [`Composer`](http://get
 ```json
 {
     "require": {
-        "ghunti/highcharts-php": "^4"
+        "marmark0/highcharts-php": "^3"
     }
 }
 ```
-Current package version supports PHP >= 8.0.
+Current package version supports PHP >= 8.2.
 For compatibility with older PHP versions, use the 3.x tag.
 
 Usage
