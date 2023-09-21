@@ -4,7 +4,7 @@
     "description": "A php wrapper for highcharts and highstock javascript libraries (for PHP 8.2)",
     "keywords": ["highcharts", "highstock", "php", "charts", "javascript"],
     "homepage": "https://goncaloqueiros.net/highcharts.php",
-    "license": "GPL-3.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "Gonçalo Queirós",
@@ -14,7 +14,7 @@
         },
         {
             "name": "MaRmAR",
-            "email": "public@marmar.sk",
+            "email": "github@marmar.sk",
             "homepage": "https://marmar.sk",
             "role": "Developer"
         }

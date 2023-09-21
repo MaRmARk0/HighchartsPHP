@@ -19,12 +19,12 @@ class HighchartOptionRenderer
     /**
      * Render the options and returns the javascript that represents them
      *
-     * @param HighchartOption $options The options to render
+     * @param mixed $options The options to render
      *
      * @return string The javascript code
      * @throws JsonException in case of json_encode error
      */
-    public static function render(HighchartOption $options): string
+    public static function render(mixed $options): string
     {
         $jsExpressions = [];
         //Replace any js expression with random strings, so we can switch
